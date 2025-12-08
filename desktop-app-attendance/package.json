@@ -1,0 +1,21 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "electron": "^39.2.6",
+    "express": "^5.2.1",
+    "nfc-pcsc": "^0.8.1"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^3.2.9"
+  }
+}
