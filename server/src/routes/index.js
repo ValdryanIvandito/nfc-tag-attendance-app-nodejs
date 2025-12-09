@@ -5,13 +5,13 @@ import AttendanceController from "../controllers/attendanceController.js";
 
 const router = express.Router();
 
-router.get("/attendance", AttendanceController.getAttendance);
-router.post("/attendance", AttendanceController.createAttendance);
-router.patch("/attendance", AttendanceController.updateAttendance);
+router.get("/v1/attendance", AttendanceController.getAttendance);
+router.post("/v1/attendance", AttendanceController.createAttendance);
+router.patch("/v1/attendance", AttendanceController.updateAttendance);
 
-router.get("/employee", EmployeeController.getEmployee);
-router.post("/employee", EmployeeController.createEmployee);
-router.patch("/employee", EmployeeController.updateEmployee);
-router.delete("/employee", EmployeeController.deleteEmployee);
+router.get("/v1/employee", EmployeeController.getEmployee);
+router.post("/v1/employee", EmployeeController.createEmployee);
+router.patch("/v1/employee", EmployeeController.updateEmployee);
+router.delete("/v1/employee", EmployeeController.deleteEmployee);
 
 export default router;

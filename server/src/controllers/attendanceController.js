@@ -46,7 +46,7 @@ class AttendanceController {
         const id = Number(attendance_id);
 
         if (isNaN(id)) {
-          return response(res, 400, "Attendance_id must be a number");
+          return response(res, 400, "attendance_id must be a number");
         }
 
         const Attendance = await AttendanceService.getAttendanceById(

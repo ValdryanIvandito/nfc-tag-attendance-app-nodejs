@@ -5,9 +5,9 @@ import response from "../utils/response.js";
 class EmployeeController {
   static async createEmployee(req, res, next) {
     try {
-      const { uid, full_name, department, position, status } = req.body;
+      const { uid, full_name, department, position } = req.body;
 
-      if (!uid || !full_name || !department || !position || !status) {
+      if (!uid || !full_name || !department || !position) {
         return response(res, 400, "All fields are required");
       }
 
@@ -16,8 +16,10 @@ class EmployeeController {
         full_name,
         department,
         position,
-        status,
+        status: "ACTIVE",
       });
+
+      console.log
 
       return response(res, 201, "Employee created successfully", result);
     } catch (error) {

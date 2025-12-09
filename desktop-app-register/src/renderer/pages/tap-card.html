@@ -1,0 +1,81 @@
+// src/renderer/pages/tap-card.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scan NFC Card</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      @keyframes pulseGlow {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.07);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .pulse {
+        animation: pulseGlow 1.6s infinite ease-in-out;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 h-screen flex items-center justify-center font-sans">
+    <div class="bg-white shadow-xl rounded-2xl p-10 w-[420px] text-center">
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Scan NFC Card</h2>
+      <p class="text-gray-500 mb-6">Tap employee's NFC card on the reader.</p>
+
+      <div class="flex justify-center mb-8">
+        <div
+          class="w-28 h-28 bg-blue-50 rounded-full flex items-center justify-center pulse shadow-inner"
+        >
+          <svg
+            width="60"
+            height="60"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#2563eb"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 8a3 3 0 0 1 0 6"></path>
+            <path d="M19 5a8 8 0 0 1 0 14"></path>
+            <path d="M3 12h1"></path>
+            <path d="M8 12h1"></path>
+            <path d="M12 12h1"></path>
+          </svg>
+        </div>
+      </div>
+
+      <p id="statusText" class="text-lg font-semibold">Waiting for card...</p>
+
+      <button
+        id="retryButton"
+        class="hidden mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
+      >
+        Try Again
+      </button>
+
+      <button
+        onclick="window.location.href='index.html'"
+        class="mt-10 w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold transition"
+      >
+        ← Back
+      </button>
+    </div>
+
+    <script src="../renderer.js"></script>
+  </body>
+</html>

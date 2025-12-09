@@ -1,25 +1,35 @@
-const { app, BrowserWindow } = require("electron");
+// src/main/main.js
 const path = require("path");
+const { app, BrowserWindow } = require("electron");
+require("dotenv").config();
 
-const { startNFC } = require("../utils/nfcReader");
-const { setupIPC } = require("../ipc/nfcHandler");
-
-let mainWindow;
+const registerIPC = require("../ipc/ipcHandler"); // module.exports = registerIPC
 
 function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 500,
-    height: 300,
+  const win = new BrowserWindow({
+    width: 900,
+    height: 600,
     webPreferences: {
       preload: path.join(__dirname, "../preload/preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
-    }
+    },
   });
 
-  mainWindow.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
+  // adjust path relative to this file (src/main)
+  win.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
 
-  setupIPC(mainWindow, startNFC);
+  // Register all IPC listeners
+  registerIPC(win);
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
+});
