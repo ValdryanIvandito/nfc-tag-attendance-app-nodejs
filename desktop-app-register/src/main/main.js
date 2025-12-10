@@ -1,9 +1,8 @@
 // src/main/main.js
+require("dotenv").config();
 const path = require("path");
 const { app, BrowserWindow } = require("electron");
-require("dotenv").config();
-
-const registerIPC = require("../ipc/ipcHandler"); // module.exports = registerIPC
+const registerIPC = require("../ipc/ipcHandler");
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -16,10 +15,7 @@ function createWindow() {
     },
   });
 
-  // adjust path relative to this file (src/main)
   win.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
-
-  // Register all IPC listeners
   registerIPC(win);
 }
 
