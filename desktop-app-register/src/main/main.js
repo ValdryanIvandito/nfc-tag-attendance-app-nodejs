@@ -12,9 +12,12 @@ function createWindow() {
       preload: path.join(__dirname, "../preload/preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
+      // webSecurity: false, // 🔥 Disable CORS
+      // allowRunningInsecureContent: true, // (optional) allow HTTP/HTTPS mix
     },
   });
 
+  win.setMenuBarVisibility(false);
   win.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
   registerIPC(win);
 }

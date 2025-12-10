@@ -2,7 +2,7 @@
 
 const { ipcMain } = require("electron");
 const { startNFC, stopNFC } = require("../utils/nfcReader");
-fetch = require("node-fetch");
+const fetch = require("node-fetch");
 
 function registerIPC(mainWindow) {
   // Start NFC
@@ -33,27 +33,6 @@ function registerIPC(mainWindow) {
     }
 
     try {
-      // const checkUid = await fetch(
-      //   `${API_BASE_URL.replace(/\/$/, "")}/v1/employee?uid=${payload.uid}`,
-      //   {
-      //     method: "GET",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "x-api-key": API_KEY,
-      //     },
-      //   }
-      // );
-
-      // console.log("CHECK UID", checkUid.status);
-
-      // if (checkUid.status === 200) {
-      //   return {
-      //     status: false,
-      //     message:
-      //       "This NFC card is already registered, please a new NFC card!",
-      //   };
-      // }
-
       const res = await fetch(
         `${API_BASE_URL.replace(/\/$/, "")}/v1/employee`,
         {
@@ -67,6 +46,7 @@ function registerIPC(mainWindow) {
       );
 
       const data = await res.json();
+      console.log("RESPONSE API", data);
 
       if (data.status === 201) {
         return {

@@ -102,7 +102,7 @@ window.addEventListener("DOMContentLoaded", () => {
           updateStatus("Registration Succeed!", "text-green-600");
         } else {
           updateStatus(
-            "Registration Failed!\nPlease try with a new NFC Card...",
+            "Registration Failed!\nPlease try with a new NFC Card.",
             "text-red-600"
           );
           retryButton.classList.remove("hidden");
