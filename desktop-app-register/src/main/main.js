@@ -5,7 +5,7 @@ const { app, BrowserWindow } = require("electron");
 const registerIPC = require("../ipc/ipcHandler");
 
 function createWindow() {
-  const win = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 900,
     height: 600,
     webPreferences: {
@@ -17,8 +17,8 @@ function createWindow() {
     },
   });
 
-  win.setMenuBarVisibility(false);
-  win.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
+  mainWindow.setMenuBarVisibility(false);
+  mainWindow.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
   registerIPC(win);
 }
 

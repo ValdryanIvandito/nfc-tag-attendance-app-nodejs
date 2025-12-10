@@ -1,19 +1,120 @@
-<!-- src/renderer/pages/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>NFC Reader</title>
-    <link rel="stylesheet" href="../styles/main.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>NFC Attendance</title>
 
-    <div id="message" class="center">
-        Tap kartu ID Anda
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      /* Fade animation */
+      .fade-enter {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      .fade-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.4s, transform 0.4s;
+      }
+
+      /* Pulse animation */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+      }
+      .pulse {
+        animation: pulse 2s infinite ease-in-out;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 h-screen flex items-center justify-center font-sans">
+    <div class="text-center px-6 select-none">
+      <!-- Header -->
+      <h1 class="text-4xl font-bold text-gray-800 mb-1 tracking-tight">
+        Employee Attendance System
+      </h1>
+      <p class="text-gray-500 text-lg mb-6">
+        Scan your ID to check-in / check-out
+      </p>
+
+      <!-- Date & Time -->
+      <div id="datetime" class="text-xl font-semibold text-blue-700 mb-8"></div>
+
+      <!-- Divider -->
+      <div class="h-[1px] bg-gray-300 w-64 mx-auto mb-8"></div>
+
+      <!-- NFC Icon -->
+      <div id="card-icon" class="pulse mx-auto mb-6">
+        <svg
+          id="nfc-svg"
+          width="90"
+          height="90"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#2563eb"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="opacity-90 drop-shadow-lg mx-auto"
+        >
+          <path d="M15 8a3 3 0 0 1 0 6"></path>
+          <path d="M19 5a8 8 0 0 1 0 14"></path>
+          <path d="M3 12h1"></path>
+          <path d="M8 12h1"></path>
+          <path d="M12 12h1"></path>
+        </svg>
+      </div>
+
+      <!-- Main Message -->
+      <div
+        id="message"
+        class="text-gray-700 text-3xl font-semibold fade-enter fade-enter-active"
+      >
+        Tap your ID card to record your attendance.
+      </div>
     </div>
 
-    <!-- load renderer.js -->
-    <script src="../renderer.js"></script>
+    <script>
+      // Update date & time every second
+      function updateDateTime() {
+        const now = new Date();
 
-</body>
+        const optionsDate = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        const formattedDate = now.toLocaleDateString("en-US", optionsDate);
+
+        const formattedTime = now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+
+        document.getElementById(
+          "datetime"
+        ).textContent = `${formattedDate} — ${formattedTime}`;
+      }
+
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+    </script>
+
+    <script src="../renderer.js"></script>
+  </body>
 </html>

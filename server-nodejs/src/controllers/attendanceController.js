@@ -5,14 +5,14 @@ import response from "../utils/response.js";
 class AttendanceController {
   static async createAttendance(req, res, next) {
     try {
-      const { employee_id } = req.body;
+      const { uid } = req.body;
 
-      if (!employee_id) {
-        return response(res, 400, "employee_id is required");
+      if (!uid) {
+        return response(res, 400, "uid is required");
       }
 
       const result = await AttendanceService.createAttendance({
-        employee_id,
+        uid,
       });
 
       return response(res, 201, "Attendance created successfully", result);
@@ -39,7 +39,7 @@ class AttendanceController {
 
   static async getAttendance(req, res, next) {
     try {
-      const { attendance_id } = req.query;
+      const { attendance_id, uid } = req.query;
 
       // === GET BY ID ===
       if (attendance_id) {
@@ -49,15 +49,26 @@ class AttendanceController {
           return response(res, 400, "attendance_id must be a number");
         }
 
-        const Attendance = await AttendanceService.getAttendanceById(
+        const attendance = await AttendanceService.getAttendanceById(
           attendance_id
         );
 
-        if (!Attendance) {
+        if (!attendance) {
           return response(res, 404, "Attendance not found");
         }
 
-        return response(res, 200, "Success", Attendance);
+        return response(res, 200, "Success", attendance);
+      }
+
+      // === GET BY UID ===
+      if (uid) {
+        const attendance = await AttendanceService.getAttendanceByDateNow(uid);
+
+        if (!attendance) {
+          return response(res, 404, "Attendance not found");
+        }
+
+        return response(res, 200, "Success", attendance);
       }
 
       // === GET ALL ===
