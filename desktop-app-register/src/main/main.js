@@ -19,7 +19,7 @@ function createWindow() {
 
   mainWindow.setMenuBarVisibility(false);
   mainWindow.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
-  registerIPC(win);
+  registerIPC(mainWindow);
 }
 
 app.whenReady().then(() => {
