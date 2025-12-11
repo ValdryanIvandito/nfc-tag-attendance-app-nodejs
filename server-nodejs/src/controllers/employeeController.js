@@ -1,4 +1,5 @@
 // src/controllers/employeeController.js
+
 import EmployeeService from "../services/employeeService.js";
 import response from "../utils/response.js";
 
@@ -19,7 +20,7 @@ class EmployeeController {
         status: "ACTIVE",
       });
 
-      console.log
+      console.log;
 
       return response(res, 201, "Employee created successfully", result);
     } catch (error) {
