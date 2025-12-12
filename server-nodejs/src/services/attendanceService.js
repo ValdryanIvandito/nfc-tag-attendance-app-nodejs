@@ -46,7 +46,8 @@ class AttendanceService {
         : {}),
     };
 
-    const [data, total] = await Promise.all([
+    const [total, attendances] = await Promise.all([
+      prisma.attendance.count({ where }),
       prisma.attendance.findMany({
         where,
         skip,
@@ -54,7 +55,6 @@ class AttendanceService {
         orderBy: { attendance_id: "desc" },
         include: { Employee: true },
       }),
-      prisma.attendance.count({ where }),
     ]);
 
     return {
@@ -62,7 +62,7 @@ class AttendanceService {
       limit,
       total,
       totalPages: Math.ceil(total / limit),
-      attendances: data,
+      data: attendances,
     };
   }
 
