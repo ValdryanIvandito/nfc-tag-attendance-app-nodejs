@@ -1,5 +1,4 @@
 // src/api/employee.api.ts
-
 import { axiosClient } from "./_axiosClient";
 
 export interface Employee {
@@ -22,44 +21,44 @@ export interface PaginatedEmployee {
 }
 
 export const employeeAPI = {
-  /** GET ALL PAGINATED */
-  getAll: async (page: number, limit: number) => {
-    const res = await axiosClient.get(`/employee?page=${page}&limit=${limit}`);
+  /** GET ALL PAGINATED + FILTERING */
+  getAll: async (
+    page: number,
+    limit: number,
+    search?: string,
+    department?: string,
+    status?: string
+  ) => {
+    const params = new URLSearchParams();
+
+    params.append("page", String(page));
+    params.append("limit", String(limit));
+
+    if (search) params.append("search", search);
+    if (department && department !== "ALL")
+      params.append("department", department);
+    if (status && status !== "ALL") params.append("status", status);
+
+    const res = await axiosClient.get(`/employee?${params.toString()}`);
 
     return {
       page: res.data.data.page,
       limit: res.data.data.limit,
       total: res.data.data.total,
       totalPages: res.data.data.totalPages,
-      employees: res.data.data.data, // ⬅=== ARRAY EMPLOYEE
+      employees: res.data.data.data, // array employee
     };
   },
 
-  /** GET PAGINATED */
-  getPaginated: async (
-    page: number,
-    limit: number
-  ): Promise<PaginatedEmployee> => {
-    const res = await axiosClient.get("/employee", {
-      params: { page, limit },
+  delete: async (employee_id: number) => {
+    const res = await axiosClient.delete("/employee", {
+      data: { employee_id: employee_id },
     });
-    return res.data;
-  },
-
-  create: async (data: Partial<Employee>) => {
-    const res = await axiosClient.post("/employee", data);
     return res.data.data;
   },
 
   update: async (data: Partial<Employee>) => {
     const res = await axiosClient.patch("/employee", data);
-    return res.data.data;
-  },
-
-  delete: async (uid: string) => {
-    const res = await axiosClient.delete("/employee", {
-      data: { uid },
-    });
     return res.data.data;
   },
 };

@@ -18,7 +18,7 @@ class EmployeeService {
   static async deleteEmployee(payload) {
     return prisma.employee.update({
       where: { employee_id: Number(payload.employee_id) },
-      data: { status: "RESIGN" },
+      data: { status: "INACTIVE" },
     });
   }
 
