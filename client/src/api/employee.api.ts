@@ -1,27 +1,8 @@
 // src/api/employee.api.ts
 import { axiosClient } from "./_axiosClient";
-
-export interface Employee {
-  employee_id: number;
-  uid: string;
-  full_name: string;
-  department: string;
-  position: string;
-  status: string;
-  created_at: string;
-  update_at?: string | null;
-}
-
-export interface PaginatedEmployee {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-  data: Employee[];
-}
+import type { Employee } from "@/types/employee.types.ts";
 
 export const employeeAPI = {
-  /** GET ALL PAGINATED + FILTERING */
   getAll: async (
     page: number,
     limit: number,

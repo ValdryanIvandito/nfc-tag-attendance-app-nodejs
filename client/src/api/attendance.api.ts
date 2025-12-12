@@ -1,11 +1,5 @@
 import { axiosClient } from "./_axiosClient";
-
-export interface Attendance {
-  attendance_id: number;
-  uid: string;
-  check_in_at: string;
-  check_out_at?: string | null;
-}
+import type { Attendance } from "@/types/attendance.type";
 
 export const attendanceAPI = {
   getAll: async (): Promise<Attendance[]> => {
