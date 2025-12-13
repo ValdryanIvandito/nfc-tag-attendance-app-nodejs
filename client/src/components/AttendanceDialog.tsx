@@ -8,7 +8,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { extractTime } from "@/lib/utils";
+import { extractTime } from "@/utils/utils";
 import type { Attendance } from "@/types/attendance.type";
 
 type Props = {

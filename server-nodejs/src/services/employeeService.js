@@ -1,27 +1,18 @@
 // src/services/employeeService.js
 import prisma from "../utils/prisma.js";
-import eventBus from "../utils/eventBus.js";
 
 class EmployeeService {
   static async createEmployee(payload) {
-    const employee = prisma.employee.create({
+    return prisma.employee.create({
       data: payload,
     });
-
-    eventBus.emit("employee:created", employee);
-
-    return employee;
   }
 
   static async updateEmployee(payload) {
-    const employee = await prisma.employee.update({
+    return prisma.employee.update({
       where: { employee_id: Number(payload.employee_id) },
       data: { status: payload.status },
     });
-
-    eventBus.emit("employee:updated", employee);
-
-    return employee;
   }
 
   static async deleteEmployee(payload) {
@@ -31,9 +22,8 @@ class EmployeeService {
     });
   }
 
-  static async getAllEmployees({ page, limit, search, department, status }) {
+  static async getEmployees({ page, limit, search, department, status }) {
     const skip = (page - 1) * limit;
-
     const where = {
       AND: [
         search
@@ -44,11 +34,9 @@ class EmployeeService {
               ],
             }
           : {},
-
         department
           ? { department: { equals: department, mode: "insensitive" } }
           : {},
-
         status ? { status } : {},
       ],
     };

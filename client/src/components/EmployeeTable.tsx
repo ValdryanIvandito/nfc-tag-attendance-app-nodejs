@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EmployeeActions } from "./EmployeeActions";
-import { getStatusColor } from "@/lib/utils";
+import { getStatusColor } from "@/utils/utils";
 import type { Employee } from "@/types/employee.types.ts";
 
 type Props = {

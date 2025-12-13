@@ -1,5 +1,4 @@
 // src/controllers/employeeController.js
-
 import EmployeeService from "../services/employeeService.js";
 import response from "../utils/response.js";
 
@@ -104,7 +103,7 @@ class EmployeeController {
         status = "",
       } = req.query;
 
-      const result = await EmployeeService.getAllEmployees({
+      const result = await EmployeeService.getEmployees({
         page: Number(page),
         limit: Number(limit),
         search,

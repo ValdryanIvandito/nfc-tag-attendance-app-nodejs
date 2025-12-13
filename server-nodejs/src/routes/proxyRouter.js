@@ -1,11 +1,8 @@
 // src/routes/proxyRouter.js
-
 import express from "express";
 import dotenv from "dotenv";
-
 import EmployeeController from "../controllers/employeeController.js";
 import AttendanceController from "../controllers/attendanceController.js";
-
 dotenv.config();
 
 const proxyRouter = express.Router();

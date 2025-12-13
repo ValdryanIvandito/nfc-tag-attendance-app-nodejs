@@ -11,7 +11,6 @@ export const employeeAPI = {
     status?: string
   ) => {
     const params = new URLSearchParams();
-
     params.append("page", String(page));
     params.append("limit", String(limit));
 

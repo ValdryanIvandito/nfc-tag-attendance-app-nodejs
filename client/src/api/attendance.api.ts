@@ -9,7 +9,6 @@ export const attendanceAPI = {
     date?: string
   ) => {
     const params = new URLSearchParams();
-
     params.append("page", String(page));
     params.append("limit", String(limit));
     if (search) params.append("search", search);

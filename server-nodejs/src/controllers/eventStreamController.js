@@ -14,17 +14,10 @@ class EventStreamController {
     };
 
     const attendanceCreated = (data) => send("attendance:created", data);
-    const employeeCreated = (data) => send("employee:created", data);
-    const employeeUpdated = (data) => send("employee:updated", data);
-
     eventBus.on("attendance:created", attendanceCreated);
-    eventBus.on("employee:created", employeeCreated);
-    eventBus.on("employee:updated", employeeUpdated);
 
     req.on("close", () => {
       eventBus.off("attendance:created", attendanceCreated);
-      eventBus.off("employee:created", employeeCreated);
-      eventBus.off("employee:updated", employeeUpdated);
     });
   }
 }

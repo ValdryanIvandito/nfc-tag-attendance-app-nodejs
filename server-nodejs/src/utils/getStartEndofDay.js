@@ -1,7 +1,6 @@
-function getStartEndOfDay(timeZone = "Asia/Jakarta") {
+const getStartEndOfDay = (timeZone = "Asia/Jakarta") => {
   const now = new Date();
 
-  // Ambil tanggal berdasarkan timezone target
   const formatter = new Intl.DateTimeFormat("id-ID", {
     timeZone,
     year: "numeric",
@@ -17,6 +16,6 @@ function getStartEndOfDay(timeZone = "Asia/Jakarta") {
   const end = new Date(`${year}-${month}-${day}T23:59:59.999Z`);
 
   return { start, end };
-}
+};
 
 export default getStartEndOfDay;

@@ -1,5 +1,4 @@
-// src/routes/index.js
-
+// src/routes/router.js
 import express from "express";
 import EmployeeController from "../controllers/employeeController.js";
 import AttendanceController from "../controllers/attendanceController.js";

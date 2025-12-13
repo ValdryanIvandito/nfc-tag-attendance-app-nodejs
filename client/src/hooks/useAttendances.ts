@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from "react";
+import { attendanceAPI } from "@/api/attendance.api";
+import { toLocalDateISO } from "@/utils/utils";
 import type {
   Attendance,
   AttendanceListResponse,
 } from "@/types/attendance.type";
-import { attendanceAPI } from "@/api/attendance.api";
-import { toLocalDateISO } from "@/lib/utils";
 
 export function useAttendances() {
   const [attendanceData, setAttendanceData] = useState<Attendance[]>([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
 
-  const [, setTotal] = useState(0); // ✅ WAJIB
+  const [, setTotal] = useState(0); 
   const [totalPages, setTotalPages] = useState(1);
 
   const [search, setSearch] = useState("");
@@ -37,7 +37,7 @@ export function useAttendances() {
       );
 
       setAttendanceData(res.attendances);
-      setTotal(res.total); // 🔑 SOURCE OF TRUTH
+      setTotal(res.total);
       setTotalPages(Math.max(1, Math.ceil(res.total / limit)));
     } catch (err) {
       setError(err);
@@ -69,7 +69,6 @@ export function useAttendances() {
         return [attendance, ...prev].slice(0, limit);
       });
 
-      // 🔑 PRESISI TOTAL
       setTotal((prev) => {
         const nextTotal = prev + 1;
         setTotalPages(Math.ceil(nextTotal / limit));
@@ -86,22 +85,18 @@ export function useAttendances() {
   return {
     attendanceData,
     prependAttendance,
-
     page,
     setPage,
     limit,
     setLimit,
     totalPages,
-
     search,
     setSearch,
     department,
     setDepartment,
     date,
     setDate,
-
     loading,
     error,
   };
 }
-

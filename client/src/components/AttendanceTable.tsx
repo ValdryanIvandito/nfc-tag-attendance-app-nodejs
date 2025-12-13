@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { extractTime } from "@/lib/utils";
+import { extractTime } from "@/utils/utils";
 import { AttendanceAction } from "./AttendanceAction";
 import type { Attendance } from "@/types/attendance.type";
 

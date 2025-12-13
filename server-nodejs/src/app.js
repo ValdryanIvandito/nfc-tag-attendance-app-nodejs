@@ -1,9 +1,8 @@
 // src/app.js
-
 import express from "express";
 import cors from "cors";
 import apiKey from "./middlewares/apiKey.js";
-import router from "./routes/index.js";
+import router from "./routes/router.js";
 import proxyRouter from "./routes/proxyRouter.js";
 import eventStreamRouter from "./routes/eventStreamRouter.js";
 import errorHandler from "./middlewares/errorHandler.js";

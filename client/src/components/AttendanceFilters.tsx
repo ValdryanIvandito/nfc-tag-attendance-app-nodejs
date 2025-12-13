@@ -2,7 +2,7 @@
 import React from "react";
 import { Search, Filter, ChevronDownIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { toLocalDateShortText } from "@/lib/utils";
+import { toLocalDateShortText } from "@/utils/utils";
 import {
   Select,
   SelectContent,

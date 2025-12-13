@@ -1,7 +1,7 @@
 // src/services/attendanceService.js
 import prisma from "../utils/prisma.js";
 import eventBus from "../utils/eventBus.js";
-import getStartEndofDay from "../utils/getStartEndofDay.js";
+import getStartEndOfDay from "../utils/getStartEndOfDay.js";
 
 class AttendanceService {
   static async createAttendance(payload) {
@@ -13,7 +13,6 @@ class AttendanceService {
     });
 
     eventBus.emit("attendance:created", attendance);
-
     return attendance;
   }
 
@@ -29,7 +28,6 @@ class AttendanceService {
 
   static async getAllAttendances({ page, limit, search, department, date }) {
     const skip = (page - 1) * limit;
-
     const where = {
       AND: [
         ...(search
