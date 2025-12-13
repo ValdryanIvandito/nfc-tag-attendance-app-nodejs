@@ -22,6 +22,7 @@ export const EmployeeActions: React.FC<Props> = ({
         onClick={onDetail}
       >
         <Info className="w-4 h-4" />
+        <span className="hidden sm:inline ml-1">Detail</span>
       </Button>
 
       <Button

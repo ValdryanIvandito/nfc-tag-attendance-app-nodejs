@@ -2,6 +2,7 @@
 import type { Employee } from "./employee.types.ts";
 
 export type Attendance = {
+  Employee: any;
   attendance_id: number;
   uid: string;
   check_in_at: string;

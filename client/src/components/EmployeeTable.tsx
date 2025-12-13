@@ -8,9 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { Employee } from "@/types/employee.types.ts";
 import { EmployeeActions } from "./EmployeeActions";
 import { getStatusColor } from "@/lib/utils";
+import type { Employee } from "@/types/employee.types.ts";
 
 type Props = {
   data: Employee[];
@@ -26,7 +26,7 @@ export const EmployeeTable: React.FC<Props> = ({
   onDetail,
 }) => {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto px-4">
       <Table>
         <TableHeader>
           <TableRow>

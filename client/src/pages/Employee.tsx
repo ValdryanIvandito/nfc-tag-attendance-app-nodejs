@@ -1,10 +1,10 @@
 // src/pages/Employee.tsx
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
+import { useEmployees } from "@/hooks/useEmployees";
 import { EmployeeFilters } from "@/components/EmployeeFilters";
 import { EmployeeTable } from "@/components/EmployeeTable";
 import { EmployeeDialogs } from "@/components/EmployeeDialogs";
-import { useEmployees } from "@/hooks/useEmployees";
 import type { Employee } from "@/types/employee.types.ts";
 
 export default function EmployeePage() {

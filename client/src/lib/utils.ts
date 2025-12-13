@@ -23,3 +23,19 @@ export function getStatusColor(status: string) {
       return "bg-gray-700/50 text-gray-300 border border-gray-600";
   }
 }
+
+export function extractTime(dateTimeString: string) {
+  const date = new Date(dateTimeString);
+
+  const hours24 = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  const period = hours24 >= 12 ? "PM" : "AM";
+  const hours12 = hours24 % 12 || 12;
+
+  const format = `${String(hours12).padStart(2, "0")}:${String(
+    minutes
+  ).padStart(2, "0")}:${String(seconds).padStart(2, "0")} ${period}`;
+
+  return format;
+}
