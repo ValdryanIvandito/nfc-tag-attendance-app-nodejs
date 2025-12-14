@@ -6,7 +6,8 @@ export const attendanceAPI = {
     limit: number,
     search?: string,
     department?: string,
-    date?: string
+    date?: string,
+    timezone: string
   ) => {
     const params = new URLSearchParams();
 
@@ -24,6 +25,8 @@ export const attendanceAPI = {
     if (date) {
       params.append("date", date);
     }
+
+    params.append("timezone", timezone);
 
     const res = await axiosClient.get(`/attendance`, { params });
 

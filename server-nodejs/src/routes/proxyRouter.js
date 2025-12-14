@@ -1,8 +1,9 @@
 // src/routes/proxyRouter.js
 import express from "express";
 import dotenv from "dotenv";
-import EmployeeController from "../controllers/employeeController.js";
 import AttendanceController from "../controllers/attendanceController.js";
+import EmployeeController from "../controllers/employeeController.js";
+import DashboardController from "../controllers/dashboardController.js";
 dotenv.config();
 
 const proxyRouter = express.Router();
@@ -39,15 +40,18 @@ proxyRouter.use((req, res, next) => {
   next();
 });
 
+// ==================== ATTENDANCE ====================
+proxyRouter.get("/v1/attendance", AttendanceController.getAttendance);
+proxyRouter.post("/v1/attendance", AttendanceController.createAttendance);
+proxyRouter.patch("/v1/attendance", AttendanceController.updateAttendance);
+
 // ==================== EMPLOYEE ====================
 proxyRouter.get("/v1/employee", EmployeeController.getEmployee);
 proxyRouter.post("/v1/employee", EmployeeController.createEmployee);
 proxyRouter.patch("/v1/employee", EmployeeController.updateEmployee);
 proxyRouter.delete("/v1/employee", EmployeeController.deleteEmployee);
 
-// ==================== ATTENDANCE ====================
-proxyRouter.get("/v1/attendance", AttendanceController.getAttendance);
-proxyRouter.post("/v1/attendance", AttendanceController.createAttendance);
-proxyRouter.patch("/v1/attendance", AttendanceController.updateAttendance);
+// ==================== EMPLOYEE ====================
+proxyRouter.get("/v1/dashboard", DashboardController.getDashboard);
 
 export default proxyRouter;

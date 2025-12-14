@@ -1,8 +1,28 @@
 // src/renderer/renderer.js
+
 window.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("message");
   const icon = document.getElementById("card-icon");
 
+  function updateDateTime() {
+    const now = new Date();
+    const optionsDate = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const formattedDate = now.toLocaleDateString("en-US", optionsDate);
+    const formattedTime = now.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    document.getElementById(
+      "datetime"
+    ).textContent = `${formattedDate} — ${formattedTime}`;
+  }
+  
   function showMessage(text, type = "default") {
     // Reset all color classes
     message.classList.remove("text-green-600", "text-blue-600", "text-red-600");
@@ -19,6 +39,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
     message.textContent = text;
   }
+
+  // Update date & time every second
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
 
   window.nfcAPI.onCardDetected((msg) => {
     icon.classList.remove("pulse");

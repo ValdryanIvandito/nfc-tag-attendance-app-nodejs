@@ -39,10 +39,20 @@ class AttendanceController {
 
   static async getAttendance(req, res, next) {
     try {
-      const { uid, datetime, timezone } = req.query;
+      const {
+        uid,
+        datetime,
+        timezone,
+
+        page = 1,
+        limit = 10,
+        search = "",
+        department = "",
+        date = "",
+      } = req.query;
 
       // === GET TODAY ATTENDANCE ===
-      if ((uid, datetime)) {
+      if (uid && datetime && timezone) {
         const attendance = await AttendanceService.getAttendanceToday(
           uid,
           datetime,
@@ -53,20 +63,13 @@ class AttendanceController {
       }
 
       // === GET ALL (WITH PAGINATION + SEARCH + FILTER) ===
-      const {
-        page = 1,
-        limit = 10,
-        search = "",
-        department = "",
-        date = "",
-      } = req.query;
-
       const result = await AttendanceService.getAllAttendances({
         page: Number(page),
         limit: Number(limit),
         search,
         department,
         date,
+        timezone,
       });
 
       return response(res, 200, "Success", result);

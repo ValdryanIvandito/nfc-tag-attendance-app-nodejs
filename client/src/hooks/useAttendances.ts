@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from "react";
+import { DateTime } from "luxon";
 import { attendanceAPI } from "@/api/attendance.api";
 import { toLocalDate } from "@/utils/date/toLocalDate";
 import type {
@@ -8,6 +10,8 @@ import type {
 } from "@/types/attendance.type";
 
 export function useAttendances() {
+  const timezone = DateTime.local().zoneName;
+
   const [attendanceData, setAttendanceData] = useState<Attendance[]>([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
@@ -33,7 +37,8 @@ export function useAttendances() {
         limit,
         search,
         department,
-        toLocalDate(date)
+        toLocalDate(date),
+        timezone
       );
 
       setAttendanceData(res.attendances);

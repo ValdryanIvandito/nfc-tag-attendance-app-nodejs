@@ -1,7 +1,6 @@
 // src/services/attendanceService.js
 import prisma from "../utils/prisma.js";
 import eventBus from "../utils/eventBus.js";
-import getDayDateRange from "../utils/getDayDateRange.js";
 import getDateRange from "..//utils/getDateRange.js";
 
 class AttendanceService {
@@ -27,8 +26,16 @@ class AttendanceService {
     });
   }
 
-  static async getAllAttendances({ page, limit, search, department, date }) {
-    const { start, end } = getDayDateRange(date);
+  static async getAllAttendances({
+    page,
+    limit,
+    search,
+    department,
+    date,
+    timezone,
+  }) {
+    // const { start, end } = getDayDateRange(date);
+    const { start, end } = getDateRange(date, timezone);
     const skip = (page - 1) * limit;
     const where = {
       AND: [
