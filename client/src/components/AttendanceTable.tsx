@@ -19,7 +19,7 @@ type Props = {
 
 export const AttendanceTable: React.FC<Props> = ({ data, onDetail }) => {
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto px-4">
       <Table>
         <TableHeader>
           <TableRow>

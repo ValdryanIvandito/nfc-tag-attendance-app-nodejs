@@ -47,7 +47,7 @@ class EmployeeService {
         where,
         skip,
         take: limit,
-        orderBy: { employee_id: "asc" },
+        orderBy: { employee_id: "desc" },
       }),
     ]);
 
