@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from "react";
 import { attendanceAPI } from "@/api/attendance.api";
@@ -9,8 +8,6 @@ import type {
 } from "@/types/attendance.type";
 
 export function useAttendances() {
- 
-
   const [attendanceData, setAttendanceData] = useState<Attendance[]>([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
@@ -64,7 +61,7 @@ export function useAttendances() {
         if (date) {
           const selectedDateISO = toLocalDate(date);
           const attendanceDateISO = toLocalDate(
-            new Date(attendance.check_in_at)
+            new Date(attendance.check_in_at),
           );
           if (selectedDateISO !== attendanceDateISO) return prev;
         }
@@ -72,8 +69,18 @@ export function useAttendances() {
         return [attendance, ...prev].slice(0, limit);
       });
     },
-    [page, date, limit]
+    [page, date, limit],
   );
+
+  const updateAttendance = useCallback((updated: Attendance) => {
+    setAttendanceData((prev) =>
+      prev.map((item) =>
+        item.attendance_id === updated.attendance_id
+          ? { ...item, ...updated }
+          : item,
+      ),
+    );
+  }, []);
 
   useEffect(() => {
     fetchAttendances();
@@ -82,6 +89,7 @@ export function useAttendances() {
   return {
     attendanceData,
     prependAttendance,
+    updateAttendance,
     page,
     setPage,
     limit,

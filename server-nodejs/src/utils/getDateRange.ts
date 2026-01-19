@@ -1,6 +1,13 @@
+/** src/utils/getDateRange.ts */
+
 import { DateTime } from "luxon";
 
-function getDateRange(date, zone = "utc") {
+interface DateRange {
+  start: Date;
+  end: Date;
+}
+
+function getDateRange(date: string, zone: string = "utc"): DateRange {
   const dt = DateTime.fromISO(date, { zone });
 
   return {

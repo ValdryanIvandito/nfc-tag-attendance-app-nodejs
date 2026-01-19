@@ -12,7 +12,7 @@ function startReadNFC(onRead) {
     activeReaders.push(reader);
     console.log(`\nReader detected: ${reader.reader.name}`);
     reader.once("card", (card) => {
-      console.log(`card detected`, card);
+      console.log(`Card detected:`, card);
       onRead(card.uid);
     });
 

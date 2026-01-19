@@ -1,9 +1,12 @@
-// src/controllers/employeeController.js
+/** src/controllers/employeeController.ts */
+
+import { Request, Response, NextFunction } from "express";
+
 import EmployeeService from "../services/employeeService.js";
 import response from "../utils/response.js";
 
 class EmployeeController {
-  static async createEmployee(req, res, next) {
+  static async createEmployee(req: Request, res: Response, next: NextFunction) {
     try {
       const { uid, full_name, department, position } = req.body;
 
@@ -24,7 +27,7 @@ class EmployeeController {
     }
   }
 
-  static async updateEmployee(req, res, next) {
+  static async updateEmployee(req: Request, res: Response, next: NextFunction) {
     try {
       const { employee_id, leave_status } = req.body;
 
@@ -48,7 +51,7 @@ class EmployeeController {
     }
   }
 
-  static async deleteEmployee(req, res, next) {
+  static async deleteEmployee(req: Request, res: Response, next: NextFunction) {
     try {
       const { employee_id } = req.body;
 
@@ -56,9 +59,7 @@ class EmployeeController {
         return response(res, 400, "employee_id is required");
       }
 
-      const result = await EmployeeService.deleteEmployee({
-        employee_id,
-      });
+      const result = await EmployeeService.deleteEmployee({ employee_id });
 
       return response(res, 200, "Employee status updated successfully", result);
     } catch (error) {
@@ -66,11 +67,19 @@ class EmployeeController {
     }
   }
 
-  static async getEmployee(req, res, next) {
+  static async getEmployee(req: Request, res: Response, next: NextFunction) {
     try {
-      const { employee_id, uid } = req.query;
+      const {
+        employee_id,
+        uid,
+        page = "1",
+        limit = "10",
+        search = "",
+        department = "",
+        leave_status = "",
+        employee_status = "",
+      } = req.query as Record<string, string>;
 
-      // === GET BY ID ===
       if (employee_id) {
         const id = Number(employee_id);
 
@@ -78,7 +87,7 @@ class EmployeeController {
           return response(res, 400, "employee_id must be a number");
         }
 
-        const employee = await EmployeeService.getEmployeeById(employee_id);
+        const employee = await EmployeeService.getEmployeeById(id);
 
         if (!employee) {
           return response(res, 404, "Employee not found");
@@ -87,7 +96,6 @@ class EmployeeController {
         return response(res, 200, "Success", employee);
       }
 
-      // === GET BY UID ===
       if (uid) {
         const employee = await EmployeeService.getEmployeeByUid(uid);
 
@@ -97,16 +105,6 @@ class EmployeeController {
 
         return response(res, 200, "Success", employee);
       }
-
-      // === GET ALL (WITH PAGINATION + SEARCH + FILTER) ===
-      const {
-        page = 1,
-        limit = 10,
-        search = "",
-        department = "",
-        leave_status = "",
-        employee_status = "",
-      } = req.query;
 
       const result = await EmployeeService.getEmployees({
         page: Number(page),

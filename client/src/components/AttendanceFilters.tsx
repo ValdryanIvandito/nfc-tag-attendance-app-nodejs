@@ -65,11 +65,11 @@ export const AttendanceFilters: React.FC<Props> = ({
                 <SelectGroup>
                   <SelectLabel>Select Department</SelectLabel>
                   <SelectItem value="ALL">All</SelectItem>
-                  <SelectItem value="Engineering">Engineering</SelectItem>
-                  <SelectItem value="Product">Product</SelectItem>
-                  <SelectItem value="Marketing">Marketing</SelectItem>
-                  <SelectItem value="Design">Design</SelectItem>
-                  <SelectItem value="Operations">Operations</SelectItem>
+                  <SelectItem value="ENGINEERING">ENGINEERING</SelectItem>
+                  <SelectItem value="PRODUCT">PRODUCT</SelectItem>
+                  <SelectItem value="MARKETING">MARKETING</SelectItem>
+                  <SelectItem value="DESIGN">DESIGN</SelectItem>
+                  <SelectItem value="OPERATIONS">OPERATIONS</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -107,7 +107,7 @@ export const AttendanceFilters: React.FC<Props> = ({
                         selected.getDate(),
                         12,
                         0,
-                        0
+                        0,
                       );
 
                       onDate(safeDate);

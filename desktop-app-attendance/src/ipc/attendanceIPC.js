@@ -1,8 +1,9 @@
 // src/ipc/ipHandler.js
+
 const axios = require("axios");
 const { DateTime } = require("luxon");
 
-function setupIPC(mainWindow, nfcReader) {
+function attendanceIPC(mainWindow, nfcReader) {
   nfcReader(async (uid) => {
     try {
       const API_BASE_URL = process.env.API_BASE_URL;
@@ -32,7 +33,7 @@ function setupIPC(mainWindow, nfcReader) {
       });
 
       const att = checkAtt?.data?.data ?? null;
-      console.log("CHECK ATT:", att);
+      console.log("\nResponse:", att);
 
       // =====================
       // CREATE (CHECK-IN)
@@ -46,7 +47,7 @@ function setupIPC(mainWindow, nfcReader) {
               "Content-Type": "application/json",
               "x-api-key": API_KEY,
             },
-          }
+          },
         );
 
         const fullName =
@@ -54,7 +55,7 @@ function setupIPC(mainWindow, nfcReader) {
 
         return mainWindow.webContents.send(
           "card:detected",
-          `Welcome, ${fullName}. Wishing you a productive day at work.`
+          `Welcome, ${fullName}. Wishing you a productive day at work.`,
         );
       }
 
@@ -70,7 +71,7 @@ function setupIPC(mainWindow, nfcReader) {
               "Content-Type": "application/json",
               "x-api-key": API_KEY,
             },
-          }
+          },
         );
 
         const fullName =
@@ -78,38 +79,38 @@ function setupIPC(mainWindow, nfcReader) {
 
         return mainWindow.webContents.send(
           "card:detected",
-          `See you tomorrow, ${fullName}. Wishing you a great evening.`
+          `See you tomorrow, ${fullName}. Wishing you a great evening.`,
         );
       }
 
       // =====================
       // ALREADY COMPLETED FOR DEVELOPMENT / TESTING
       // =====================
-      const createAtt = await axios.post(
-        endpoint,
-        { uid },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": API_KEY,
-          },
-        }
-      );
+      // const createAtt = await axios.post(
+      //   endpoint,
+      //   { uid },
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "x-api-key": API_KEY,
+      //     },
+      //   }
+      // );
 
-      const fullName = createAtt?.data?.data?.Employee?.full_name ?? "Employee";
+      // const fullName = createAtt?.data?.data?.Employee?.full_name ?? "Employee";
 
-      return mainWindow.webContents.send(
-        "card:detected",
-        `Welcome, ${fullName}. Wishing you a productive day at work.`
-      );
+      // return mainWindow.webContents.send(
+      //   "card:detected",
+      //   `Welcome, ${fullName}. Wishing you a productive day at work.`
+      // );
 
       // =====================
       // ALREADY COMPLETED FOR PRODUCTION
       // =====================
-      // return mainWindow.webContents.send(
-      //   "card:detected",
-      //   "Attendance already completed for today."
-      // );
+      return mainWindow.webContents.send(
+        "card:detected",
+        "Attendance already completed for today.",
+      );
     } catch (error) {
       console.error("IPC Attendance Error:", {
         message: error.message,
@@ -117,14 +118,12 @@ function setupIPC(mainWindow, nfcReader) {
         data: error.response?.data,
       });
 
-      return mainWindow.webContents.send("error:attendance", {
-        status: false,
-        message:
-          error.response?.data?.message ||
-          "Attendance service error. Please try again.",
-      });
+      return mainWindow.webContents.send(
+        "card:detected",
+        "Attendance service error, please try again.",
+      );
     }
   });
 }
 
-module.exports = { setupIPC };
+module.exports = { attendanceIPC };

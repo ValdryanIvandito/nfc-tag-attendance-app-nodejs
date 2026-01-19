@@ -30,7 +30,7 @@ export default function MainLayout({ titlePage, children }: Props) {
 
         {/* Main content with proper padding and max-width for readability */}
         <main className="flex-1 p-3 sm:p-4 overflow-auto">
-          <div className="max-w-[1600px] mx-auto w-full">{children}</div>
+          <div className="max-w-400 mx-auto w-full">{children}</div>
         </main>
       </div>
     </div>

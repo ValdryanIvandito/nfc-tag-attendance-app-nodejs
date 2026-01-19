@@ -1,5 +1,13 @@
-export default function apiKey(req, res, next) {
-  const clientKey = req.headers["x-api-key"];
+/** src/middlewares/apiKey.ts */
+
+import { Request, Response, NextFunction } from "express";
+
+export default function apiKey(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const clientKey = req.headers["x-api-key"] as string | undefined;
 
   if (!clientKey) {
     return res.status(401).json({

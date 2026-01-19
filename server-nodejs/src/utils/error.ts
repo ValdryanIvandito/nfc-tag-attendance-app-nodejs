@@ -1,4 +1,8 @@
+/** src/utils/error.ts */
+
 export class UnauthorizedError extends Error {
+  statusCode: number;
+
   constructor(message = "Unauthorized") {
     super(message);
     this.name = "UnauthorizedError";
@@ -7,6 +11,8 @@ export class UnauthorizedError extends Error {
 }
 
 export class ForbiddenError extends Error {
+  statusCode: number;
+
   constructor(message = "Access denied") {
     super(message);
     this.name = "ForbiddenError";
@@ -15,6 +21,8 @@ export class ForbiddenError extends Error {
 }
 
 export class BadRequestError extends Error {
+  statusCode: number;
+
   constructor(message = "Bad Request") {
     super(message);
     this.name = "BadRequestError";
@@ -23,6 +31,8 @@ export class BadRequestError extends Error {
 }
 
 export class NotFoundError extends Error {
+  statusCode: number;
+
   constructor(message = "Not Found") {
     super(message);
     this.name = "NotFoundError";

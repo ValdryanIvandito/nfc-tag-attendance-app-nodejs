@@ -1,9 +1,20 @@
-// src/services/dashboardService.js
+/* src/services/dashboardService.ts */
+
 import prisma from "../utils/prisma.js";
-// import eventBus from "../utils/eventBus.js";
 import getDateRange from "../utils/getDateRange.js";
 
-const LEAVE_STATUSES = [
+type LeaveStatus =
+  | "SICK"
+  | "MATERNITY"
+  | "PATERNITY"
+  | "ANNUAL"
+  | "BEREAVEMENT"
+  | "MARRIAGE"
+  | "PARENTAL"
+  | "STUDY"
+  | "RELIGIOUS";
+
+const LEAVE_STATUSES: LeaveStatus[] = [
   "SICK",
   "MATERNITY",
   "PATERNITY",
@@ -15,8 +26,15 @@ const LEAVE_STATUSES = [
   "RELIGIOUS",
 ];
 
+interface LeaveMap {
+  [key: string]: number;
+}
+
 class DashboardService {
-  static async getDashboardData(datetime, timezone) {
+  static async getDashboardData(
+    datetime: string,
+    timezone: string = "utc",
+  ) {
     const { start, end } = getDateRange(datetime, timezone);
 
     const totalActive = await prisma.employee.count({
@@ -57,7 +75,7 @@ class DashboardService {
       },
     });
 
-    const leaveMap = {
+    const leaveMap: LeaveMap = {
       SICK: 0,
       MATERNITY: 0,
       PATERNITY: 0,
@@ -70,7 +88,9 @@ class DashboardService {
     };
 
     leaveCounts.forEach((item) => {
-      leaveMap[item.leave_status] = item._count.leave_status;
+      if (item.leave_status) {
+        leaveMap[item.leave_status] = item._count.leave_status;
+      }
     });
 
     const totalLeave = Object.values(leaveMap).reduce(
@@ -78,13 +98,13 @@ class DashboardService {
       0,
     );
 
-    // 5. Final response
     return {
       presentToday,
       notPresentToday,
       totalActive,
       totalInactive,
       totalLeave,
+
       totalSick: leaveMap.SICK,
       totalMaternity: leaveMap.MATERNITY,
       totalPaternity: leaveMap.PATERNITY,

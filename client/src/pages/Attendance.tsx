@@ -12,6 +12,7 @@ export default function Attendance() {
   const {
     attendanceData,
     prependAttendance,
+    updateAttendance,
     page,
     setPage,
     limit,
@@ -26,9 +27,10 @@ export default function Attendance() {
   } = useAttendances();
 
   useEventStream<Attendance>("attendance:created", prependAttendance);
+  useEventStream<Attendance>("attendance:updated", updateAttendance);
 
   const [detailAttendance, setDetailAttendance] = useState<Attendance | null>(
-    null
+    null,
   );
 
   return (

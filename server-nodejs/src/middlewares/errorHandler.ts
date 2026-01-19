@@ -1,6 +1,14 @@
+/** src/middlewares/errorHandler.ts */
+
+import { Request, Response, NextFunction } from "express";
 import logger from "../utils/logger.js";
 
-export default function errorHandler(err, req, res, next) {
+export default function errorHandler(
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   logger.error({
     message: err.message,
     stack: err.stack,
