@@ -11,39 +11,78 @@ dotenv.config();
 
 const proxyRouter = express.Router();
 
-// WEB ORIGINS
+/**
+ * Allowed Web Origins (Allowlist)
+ */
 const webOrigins: string[] = process.env.WEB_ORIGINS
   ? process.env.WEB_ORIGINS.split(",").map((o) => o.trim())
   : [];
 
+/**
+ * PROXY SECURITY MIDDLEWARE
+ * ------------------------------------
+ * - Allow only trusted web origins
+ * - No API key required for frontend
+ * - Block unknown clients
+ * - Compatible with NGINX reverse proxy
+ */
 proxyRouter.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin as string | undefined;
+  const referer = req.headers.referer as string | undefined;
 
-  if (origin && webOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET,POST,PATCH,DELETE,OPTIONS",
-    );
-    res.setHeader("Access-Control-Allow-Headers", "*");
+  /**
+   * Fallback strategy:
+   * - Prefer Origin header (browser fetch)
+   * - Fallback to Referer (some navigations)
+   */
+  let requestOrigin: string | undefined;
 
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(204);
+  if (origin) {
+    requestOrigin = origin;
+  } else if (referer) {
+    try {
+      requestOrigin = new URL(referer).origin;
+    } catch {
+      requestOrigin = undefined;
     }
-
-    return next();
   }
 
-  const clientKey = req.headers["x-api-key"] as string | undefined;
+  /**
+   * BLOCK if origin is missing or not allowed
+   */
+  if (!requestOrigin || !webOrigins.includes(requestOrigin)) {
+    return res.status(403).json({
+      status: 403,
+      message: "Not Authorized: Origin not allowed",
+    });
+  }
 
-  if (!clientKey)
-    return res.status(401).json({ status: 401, message: "Unauthorized" });
+  /**
+   * CORS HEADERS
+   */
+  res.setHeader("Access-Control-Allow-Origin", requestOrigin);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PATCH,DELETE,OPTIONS",
+  );
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
-  if (clientKey !== process.env.API_KEY)
-    return res.status(403).json({ status: 403, message: "Access denied" });
+  /**
+   * Handle Preflight
+   */
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
 
   next();
 });
+
+/**
+ * ==========================
+ * API ROUTES
+ * ==========================
+ */
 
 // Attendance
 proxyRouter.get("/v1/attendance", AttendanceController.getAttendance);

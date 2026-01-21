@@ -1,0 +1,8 @@
+dist
+generated
+logs
+node_modules
+.env
+.git
+.gitignore
+Dockerfile
