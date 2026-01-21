@@ -1,43 +1,40 @@
-// src/ipc/ipHandler.js
+/* src/ipc/attendanceIPC.js */
 
 const axios = require("axios");
 const { DateTime } = require("luxon");
 
-function attendanceIPC(mainWindow, nfcReader) {
+function attendanceIPC(mainWindow, nfcReader, config) {
+  const API_BASE_URL = config.API_BASE_URL;
+  const DEVICE_ID = config.DEVICE_ID;
+
+  if (!API_BASE_URL || !DEVICE_ID) {
+    console.error("Terminal config missing");
+
+    return mainWindow.webContents.send(
+      "card:detected",
+      "Terminal configuration error",
+    );
+  }
+
+  const endpoint = `${API_BASE_URL.replace(/\/$/, "")}/terminal/v1/attendance`;
+
   nfcReader(async (uid) => {
     try {
-      const API_BASE_URL = process.env.API_BASE_URL;
-      const API_KEY = process.env.API_KEY;
-
-      if (!API_BASE_URL) {
-        console.error("API_BASE_URL is missing in .env");
-        return mainWindow.webContents.send("error:api", {
-          status: false,
-          message: "API_BASE_URL is missing.",
-        });
-      }
-
-      const endpoint = `${API_BASE_URL.replace(/\/$/, "")}/v1/attendance`;
       const datetime = DateTime.local().toISO();
       const timezone = DateTime.local().zoneName;
 
-      // =====================
       // CHECK ATTENDANCE
-      // =====================
       const checkAtt = await axios.get(endpoint, {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": API_KEY,
+          "x-device-id": DEVICE_ID,
         },
         params: { uid, datetime, timezone },
       });
 
       const att = checkAtt?.data?.data ?? null;
-      console.log("\nResponse:", att);
 
-      // =====================
       // CREATE (CHECK-IN)
-      // =====================
       if (!att) {
         const createAtt = await axios.post(
           endpoint,
@@ -45,7 +42,7 @@ function attendanceIPC(mainWindow, nfcReader) {
           {
             headers: {
               "Content-Type": "application/json",
-              "x-api-key": API_KEY,
+              "x-device-id": DEVICE_ID,
             },
           },
         );
@@ -59,9 +56,7 @@ function attendanceIPC(mainWindow, nfcReader) {
         );
       }
 
-      // =====================
       // UPDATE (CHECK-OUT)
-      // =====================
       if (att.check_in_at && !att.check_out_at) {
         const updateAtt = await axios.patch(
           endpoint,
@@ -69,7 +64,7 @@ function attendanceIPC(mainWindow, nfcReader) {
           {
             headers: {
               "Content-Type": "application/json",
-              "x-api-key": API_KEY,
+              "x-device-id": DEVICE_ID,
             },
           },
         );
@@ -83,30 +78,7 @@ function attendanceIPC(mainWindow, nfcReader) {
         );
       }
 
-      // =====================
-      // ALREADY COMPLETED FOR DEVELOPMENT / TESTING
-      // =====================
-      // const createAtt = await axios.post(
-      //   endpoint,
-      //   { uid },
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "x-api-key": API_KEY,
-      //     },
-      //   }
-      // );
-
-      // const fullName = createAtt?.data?.data?.Employee?.full_name ?? "Employee";
-
-      // return mainWindow.webContents.send(
-      //   "card:detected",
-      //   `Welcome, ${fullName}. Wishing you a productive day at work.`
-      // );
-
-      // =====================
-      // ALREADY COMPLETED FOR PRODUCTION
-      // =====================
+      // THIS LOGIC IS FOR DEVELOPMENT / TESTING PURPOSES ONLY
       return mainWindow.webContents.send(
         "card:detected",
         "Attendance already completed for today.",
@@ -120,7 +92,7 @@ function attendanceIPC(mainWindow, nfcReader) {
 
       return mainWindow.webContents.send(
         "card:detected",
-        "Attendance service error, please try again.",
+        "Your ID Card not recognized or system error, please contact technical support.",
       );
     }
   });

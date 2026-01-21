@@ -1,24 +1,66 @@
 {
-  "name": "electron-app",
+  "name": "employee-register",
   "version": "1.0.0",
+  "license": "Apache-2.0",
+  "author": "Valdryan Ivandito",
   "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon --exec electron . --watch electron"
+    "dev": "nodemon",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac",
+    "postinstall": "electron-rebuild"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "dotenv": "^17.2.3",
-    "electron": "^39.2.6",
-    "express": "^5.2.1",
-    "nfc-pcsc": "^0.8.1",
-    "node-fetch": "^2.7.0"
+    "axios": "^1.13.2",
+    "nfc-pcsc": "^0.8.1"
   },
   "devDependencies": {
+    "electron": "^39.2.6",
+    "electron-builder": "^24.13.3",
     "electron-rebuild": "^3.2.9",
     "nodemon": "^3.1.11"
+  },
+  "build": {
+    "appId": "com.valdryanivandito.employeeregister",
+    "productName": "Employee Register",
+    "icon": "assets/icon",
+    "asar": true,
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "compression": "maximum",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "src/utils",
+        "to": "utils"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "mac": {
+      "target": "dmg"
+    }
   }
 }

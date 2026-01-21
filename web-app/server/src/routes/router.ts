@@ -1,4 +1,4 @@
-/** src/routes/router.ts */
+/* src/routes/router.ts */
 
 import express from "express";
 

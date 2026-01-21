@@ -1,4 +1,4 @@
-// src/renderer/renderer.js
+/* src/renderer/renderer.js */
 
 window.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("message");
@@ -18,11 +18,10 @@ window.addEventListener("DOMContentLoaded", () => {
       minute: "2-digit",
       second: "2-digit",
     });
-    document.getElementById(
-      "datetime"
-    ).textContent = `${formattedDate} — ${formattedTime}`;
+    document.getElementById("datetime").textContent =
+      `${formattedDate} — ${formattedTime}`;
   }
-  
+
   function showMessage(text, type = "default") {
     // Reset all color classes
     message.classList.remove("text-green-600", "text-blue-600", "text-red-600");
@@ -51,7 +50,12 @@ window.addEventListener("DOMContentLoaded", () => {
     let type = "default";
     if (msg.includes("Welcome")) type = "success";
     if (msg.includes("See you")) type = "checkout";
-    if (msg.includes("Failed")) type = "error";
+    if (
+      msg.includes("Error") ||
+      msg.includes("error") ||
+      msg.includes("not recognized")
+    )
+      type = "error";
 
     showMessage(msg, type);
 

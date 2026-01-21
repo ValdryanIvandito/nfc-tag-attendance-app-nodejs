@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!-- src/renderer/pages/index.html -->
+
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,7 +18,9 @@
       .fade-enter-active {
         opacity: 1;
         transform: translateY(0);
-        transition: opacity 0.4s, transform 0.4s;
+        transition:
+          opacity 0.4s,
+          transform 0.4s;
       }
 
       /* Pulse animation */
@@ -86,34 +90,6 @@
         Tap your ID card to record your attendance.
       </div>
     </div>
-
-    <!-- <script>
-      // Update date & time every second
-      function updateDateTime() {
-        const now = new Date();
-
-        const optionsDate = {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        };
-        const formattedDate = now.toLocaleDateString("en-US", optionsDate);
-
-        const formattedTime = now.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        });
-
-        document.getElementById(
-          "datetime"
-        ).textContent = `${formattedDate} — ${formattedTime}`;
-      }
-
-      updateDateTime();
-      setInterval(updateDateTime, 1000);
-    </script> -->
 
     <script src="../renderer.js"></script>
   </body>

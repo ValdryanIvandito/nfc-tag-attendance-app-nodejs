@@ -1,4 +1,4 @@
-/** src/server.ts */
+/* src/server.ts */
 
 import dotenv from "dotenv";
 import app from "./app.js";

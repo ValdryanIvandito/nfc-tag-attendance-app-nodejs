@@ -1,6 +1,6 @@
-// src/preload/preload.js
+/* src/preload/preload.js */
 
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("nfcAPI", {
   onCardDetected: (callback) =>

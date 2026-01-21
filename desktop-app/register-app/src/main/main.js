@@ -1,11 +1,16 @@
-// src/main/main.js
-require("dotenv").config();
-const path = require("path");
+/* src/main/main.js */
+
 const { app, BrowserWindow } = require("electron");
-const registerIPC = require("../ipc/registerIPC");
+const path = require("path");
+
+const { registerIPC } = require("../ipc/registerIPC");
+const { loadConfig } = require("../utils/loadConfig");
+
+let mainWindow = null;
+const config = loadConfig();
 
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 600,
     webPreferences: {
@@ -18,8 +23,14 @@ function createWindow() {
   });
 
   mainWindow.setMenuBarVisibility(false);
+
   mainWindow.loadFile(path.join(__dirname, "../renderer/pages/index.html"));
-  registerIPC(mainWindow);
+
+  registerIPC(mainWindow, config);
+
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
 }
 
 app.whenReady().then(() => {

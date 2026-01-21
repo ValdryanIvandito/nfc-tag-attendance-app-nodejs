@@ -1,4 +1,4 @@
-// src/renderer/renderer.js
+/* src/renderer/renderer.js */
 
 window.addEventListener("DOMContentLoaded", () => {
   function showToast(message, type = "error", duration = 3000) {

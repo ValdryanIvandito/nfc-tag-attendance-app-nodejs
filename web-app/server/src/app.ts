@@ -1,10 +1,11 @@
-/** src/app.ts */
+/* src/app.ts */
 
 import express, { Application } from "express";
 import cors from "cors";
 
 import apiKey from "./middlewares/apiKey.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import deviceAuth from "./middlewares/deviceAuth.js";
 
 import router from "./routes/router.js";
 import proxyRouter from "./routes/proxyRouter.js";
@@ -20,6 +21,7 @@ app.use("/events", eventStreamRouter);
 app.use("/proxy", proxyRouter);
 
 // Protected routes
+app.use("/terminal", deviceAuth, router);
 app.use("/", apiKey, router);
 
 app.use(errorHandler);

@@ -1,13 +1,36 @@
-// src/ipc/ipcHandler.js
+/* src/ipc/registerIPC.js */
 
 const { ipcMain } = require("electron");
-const { startReadNFC, stopReadNFC } = require("../utils/readNFC");
-const fetch = require("node-fetch");
+const axios = require("axios");
 
-function registerIPC(mainWindow) {
+const { startReadNFC, stopReadNFC } = require("../utils/readNFC");
+
+function registerIPC(mainWindow, config) {
+  const API_BASE_URL = config.API_BASE_URL;
+  const DEVICE_ID = config.DEVICE_ID;
+
+  if (!API_BASE_URL || !DEVICE_ID) {
+    console.error("Terminal config missing");
+
+    mainWindow.webContents.send(
+      "card:detected",
+      "Terminal configuration error",
+    );
+
+    return;
+  }
+
+  const endpoint = `${API_BASE_URL.replace(/\/$/, "")}/terminal/v1/employee`;
+
+  // Prevent duplicated listeners
+  ipcMain.removeAllListeners("nfc:start");
+  ipcMain.removeAllListeners("nfc:stop");
+  ipcMain.removeAllListeners("employee:create");
+
   // Start NFC
   ipcMain.on("nfc:start", () => {
-    console.log("\nStarting NFC listener...");
+    console.log("Starting NFC listener...");
+
     startReadNFC((uid) => {
       mainWindow.webContents.send("nfc:uid", uid);
     });
@@ -15,57 +38,43 @@ function registerIPC(mainWindow) {
 
   // Stop NFC
   ipcMain.on("nfc:stop", () => {
-    console.log("\nStopping NFC listener...");
+    console.log("Stopping NFC listener...");
     stopReadNFC();
   });
 
-  // Create employee (performed in main to keep API_KEY on backend)
+  // Create employee
   ipcMain.handle("employee:create", async (_, payload) => {
-    const API_BASE_URL = process.env.API_BASE_URL;
-    const API_KEY = process.env.API_KEY;
-
-    if (!API_BASE_URL) {
-      return {
-        status: false,
-        message: "API_BASE_URL is missing in .env",
-      };
-    }
-
     try {
-      const res = await fetch(
-        `${API_BASE_URL.replace(/\/$/, "")}/v1/employee`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": API_KEY,
-          },
-          body: JSON.stringify(payload),
+      const res = await axios.post(endpoint, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": DEVICE_ID,
         },
-      );
+      });
 
-      const data = await res.json();
-      console.log("\nResponse", data);
+      const data = res.data;
 
-      if (data.status === 201) {
+      if (data.status === 201 || data.success === true) {
         return {
           status: true,
           message: "Employee successfully registered!",
         };
-      } else {
-        return {
-          status: false,
-          message:
-            "This NFC card is already registered, please a new NFC card!",
-        };
       }
-    } catch (err) {
+
       return {
         status: false,
-        message: err.message || String(err),
+        message:
+          "This NFC card is already registered. Please use a new NFC card.",
+      };
+    } catch (err) {
+      console.error("Employee create error:", err.message);
+
+      return {
+        status: false,
+        message: err.response?.data?.message || err.message,
       };
     }
   });
 }
 
-module.exports = registerIPC;
+module.exports = { registerIPC };

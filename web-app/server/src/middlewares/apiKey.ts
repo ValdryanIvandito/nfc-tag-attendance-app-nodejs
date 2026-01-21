@@ -1,4 +1,4 @@
-/** src/middlewares/apiKey.ts */
+/* src/middlewares/apiKey.ts */
 
 import { Request, Response, NextFunction } from "express";
 

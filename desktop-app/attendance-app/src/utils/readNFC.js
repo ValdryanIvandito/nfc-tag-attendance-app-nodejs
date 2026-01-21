@@ -1,4 +1,4 @@
-// src/utils/nfcReader.js
+/* src/utils/nfcReader.js */
 
 const { NFC } = require("nfc-pcsc");
 
