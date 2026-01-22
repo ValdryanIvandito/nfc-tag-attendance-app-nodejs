@@ -23,8 +23,6 @@ const positions = [
   "OPERATIONS_STAFF",
 ];
 
-const employeeStatuses = ["ACTIVE", "INACTIVE"];
-
 const leaveStatuses = [
   "SICK",
   "ANNUAL",
@@ -247,7 +245,7 @@ async function main() {
       full_name: generateFullName(),
       department: randomFromArray(departments),
       position: randomFromArray(positions),
-      employee_status: randomFromArray(employeeStatuses),
+      employee_status: "ACTIVE",
 
       // Nullable enum handled correctly
       leave_status: isOnLeave ? randomFromArray(leaveStatuses) : "NO_LEAVE",

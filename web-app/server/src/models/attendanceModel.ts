@@ -1,4 +1,4 @@
-/* src/services/attendanceService.ts */
+/* src/models/attendanceModel.ts */
 
 import prisma from "../utils/prisma.js";
 import eventBus from "../utils/eventBus.js";
@@ -18,7 +18,7 @@ interface GetAllAttendancesParams {
   timezone?: string;
 }
 
-class AttendanceService {
+class AttendanceModel {
   static async createAttendance(payload: CreateAttendancePayload) {
     const attendance = await prisma.attendance.create({
       data: payload,
@@ -139,4 +139,4 @@ class AttendanceService {
   }
 }
 
-export default AttendanceService;
+export default AttendanceModel;

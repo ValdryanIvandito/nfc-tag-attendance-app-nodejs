@@ -2,7 +2,7 @@
 
 import { Request, Response, NextFunction } from "express";
 
-import AttendanceService from "../services/attendanceService.js";
+import AttendanceModel from "../models/attendanceModel.js";
 import response from "../utils/response.js";
 
 class AttendanceController {
@@ -18,7 +18,7 @@ class AttendanceController {
         return response(res, 400, "uid is required");
       }
 
-      const result = await AttendanceService.createAttendance({ uid });
+      const result = await AttendanceModel.createAttendance({ uid });
 
       return response(res, 201, "Attendance created successfully", result);
     } catch (error) {
@@ -38,7 +38,7 @@ class AttendanceController {
         return response(res, 400, "attendance_id is required");
       }
 
-      const result = await AttendanceService.updateAttendance(attendance_id);
+      const result = await AttendanceModel.updateAttendance(attendance_id);
 
       return response(res, 200, "Attendance updated successfully", result);
     } catch (error) {
@@ -60,7 +60,7 @@ class AttendanceController {
       } = req.query as Record<string, string>;
 
       if (uid && datetime && timezone) {
-        const attendance = await AttendanceService.getAttendanceToday(
+        const attendance = await AttendanceModel.getAttendanceToday(
           uid,
           datetime,
           timezone,
@@ -69,7 +69,7 @@ class AttendanceController {
         return response(res, 200, "Success", attendance);
       }
 
-      const result = await AttendanceService.getAllAttendances({
+      const result = await AttendanceModel.getAllAttendances({
         page: Number(page),
         limit: Number(limit),
         search,

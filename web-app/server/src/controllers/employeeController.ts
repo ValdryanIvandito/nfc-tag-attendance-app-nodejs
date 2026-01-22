@@ -2,7 +2,7 @@
 
 import { Request, Response, NextFunction } from "express";
 
-import EmployeeService from "../services/employeeService.js";
+import EmployeeModel from "../models/employeeModel.js";
 import response from "../utils/response.js";
 
 class EmployeeController {
@@ -14,7 +14,7 @@ class EmployeeController {
         return response(res, 400, "All fields are required");
       }
 
-      const result = await EmployeeService.createEmployee({
+      const result = await EmployeeModel.createEmployee({
         uid,
         full_name,
         department,
@@ -35,7 +35,7 @@ class EmployeeController {
         return response(res, 400, "employee_id is required");
       }
 
-      const result = await EmployeeService.updateEmployee({
+      const result = await EmployeeModel.updateEmployee({
         employee_id,
         leave_status,
       });
@@ -59,7 +59,7 @@ class EmployeeController {
         return response(res, 400, "employee_id is required");
       }
 
-      const result = await EmployeeService.deleteEmployee({ employee_id });
+      const result = await EmployeeModel.deleteEmployee({ employee_id });
 
       return response(res, 200, "Employee status updated successfully", result);
     } catch (error) {
@@ -87,7 +87,7 @@ class EmployeeController {
           return response(res, 400, "employee_id must be a number");
         }
 
-        const employee = await EmployeeService.getEmployeeById(id);
+        const employee = await EmployeeModel.getEmployeeById(id);
 
         if (!employee) {
           return response(res, 404, "Employee not found");
@@ -97,7 +97,7 @@ class EmployeeController {
       }
 
       if (uid) {
-        const employee = await EmployeeService.getEmployeeByUid(uid);
+        const employee = await EmployeeModel.getEmployeeByUid(uid);
 
         if (!employee) {
           return response(res, 404, "Employee not found");
@@ -106,7 +106,7 @@ class EmployeeController {
         return response(res, 200, "Success", employee);
       }
 
-      const result = await EmployeeService.getEmployees({
+      const result = await EmployeeModel.getEmployees({
         page: Number(page),
         limit: Number(limit),
         search,

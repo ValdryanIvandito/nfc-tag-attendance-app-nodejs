@@ -1,4 +1,4 @@
-/* src/services/employeeService.ts */
+/* src/models/employeeModel.ts */
 
 import prisma from "../utils/prisma.js";
 import {
@@ -28,7 +28,7 @@ interface GetEmployeesParams {
   employee_status?: string;
 }
 
-class EmployeeService {
+class EmployeeModel {
   static async createEmployee(payload: CreateEmployeePayload) {
     return prisma.employee.create({
       data: payload,
@@ -120,4 +120,4 @@ class EmployeeService {
   }
 }
 
-export default EmployeeService;
+export default EmployeeModel;

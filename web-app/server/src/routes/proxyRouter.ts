@@ -24,7 +24,6 @@ const webOrigins: string[] = process.env.WEB_ORIGINS
  * - Allow only trusted web origins
  * - No API key required for frontend
  * - Block unknown clients
- * - Compatible with NGINX reverse proxy
  */
 proxyRouter.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin as string | undefined;
