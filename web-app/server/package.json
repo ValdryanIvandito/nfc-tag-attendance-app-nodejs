@@ -1,6 +1,8 @@
 {
-  "name": "server",
+  "name": "nfc-attendance-server",
   "version": "1.0.0",
+  "author": "Valdryan Ivandito",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
@@ -13,8 +15,6 @@
     "prisma:studio": "npx prisma studio",
     "prisma:seed": "node prisma/seed.js"
   },
-  "author": "Valdryan Ivandito",
-  "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "cors": "^2.8.5",
