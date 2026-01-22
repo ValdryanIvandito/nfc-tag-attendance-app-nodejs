@@ -16,11 +16,11 @@ services:
     container_name: attendance-app-server
     restart: always
     build:
-      context: ./server
+      context: ./apps/server
       args:
         DATABASE_URL: postgresql://postgres:postgres@db:5432/attendance
     env_file:
-      - ./server/.env
+      - ./apps/server/.env
     depends_on:
       - db
     ports:
@@ -30,7 +30,7 @@ services:
     container_name: attendance-app-client
     restart: always
     build:
-      context: ./client
+      context: ./apps/web-client
     depends_on:
       - server
     ports:
