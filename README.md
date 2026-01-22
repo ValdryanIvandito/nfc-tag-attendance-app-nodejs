@@ -179,42 +179,38 @@ The API Server ensures consistent data synchronization across all platforms.
 
 ### ✅ Prerequisites
 
-Make sure your environment meets the following requirements:
+Before running the system, make sure that **all required software is installed** and **the required NFC hardware is available and properly configured**.
 
-#### Software
+### Software (Must Be Installed)
 
-- **Node.js (v18 or higher)**  
-  https://nodejs.org/en/download/
+- **[Node.js (v18 or higher)](https://nodejs.org/en/download/)**
+- **[Docker & Docker Compose](https://www.docker.com/get-started)**
+- **[Git (Version Control)](https://git-scm.com/downloads)**
 
-- **Docker & Docker Compose**  
-  https://www.docker.com/get-started
+### Hardware (Must Be Available)
 
-- **Git (Version Control)**  
-  https://git-scm.com/downloads
+- **[MIFARE Classic NFC Tag](https://www.nxp.com/products/rfid-nfc/mifare-hf/mifare-classic)**
+- **[ACR122U USB NFC Reader](https://www.acs.com.hk/en/products/3/acr122u-usb-nfc-reader/)**
 
----
+#### Device Driver (Must Be Installed)
 
-#### Hardware
-
-- **NFC Reader — ACR122U USB NFC Reader**  
-  Product Page:  
-  https://www.acs.com.hk/en/products/3/acr122u-usb-nfc-reader/
-
-- **NFC Tag — MIFARE Classic (13.56 MHz)**  
-  Example Product Reference:  
-  https://www.nxp.com/products/rfid-nfc/mifare-hf/mifare-classic
-
-- **ACR122U NFC Reader Driver (Windows / macOS / Linux)**  
-  Official Driver Download:  
-  https://www.acs.com.hk/en/driver/3/acr122u-usb-nfc-reader/
+- **[ACR122U NFC Reader Driver (Windows / macOS / Linux)](https://www.acs.com.hk/en/driver/3/acr122u-usb-nfc-reader/)**
 
 ---
 
 ## 🔐 Environment Configuration
 
+Before running the application, you must create environment configuration files (`.env`) for both the API Server and the Web Client. These files store runtime configuration values required by the system.
+
+> ⚠️ **Security Notice**  
+> Exposing environment variable values directly in documentation is **not recommended for production systems**.  
+> However, in this project, the configuration values are provided openly for **learning and demonstration purposes only**, so that anyone — including junior developers — can easily run, test, and explore the system without additional setup complexity.
+
 ---
 
-### 1️⃣ API Server Environment
+### 1️⃣ API Server Environment Setup
+
+Open your terminal (Git Bash on Windows or Terminal on macOS/Linux), then create the environment file using the following command:
 
 Create the following file:
 
@@ -230,7 +226,7 @@ DATABASE_URL="postgresql://postgres:postgres@db:5432/attendance"
 
 ---
 
-### 2️⃣ Web Client Environment
+### 2️⃣ Web Client Environment Setup
 
 Create the following file:
 
@@ -251,7 +247,7 @@ This project uses Docker to run:
 
 - PostgreSQL database
 - API server
-- Web client production build
+- Web client
 
 From the project root directory, run:
 
