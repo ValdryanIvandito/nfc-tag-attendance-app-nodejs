@@ -203,8 +203,7 @@ Before running the system, make sure that **all required software is installed**
 Before running the application, you must create environment configuration files (`.env`) for both the API Server and the Web Client. These files store runtime configuration values required by the system.
 
 > ⚠️ **Security Notice**  
-> Exposing environment variable values directly in documentation is **not recommended for production systems**.  
-> However, in this project, the configuration values are provided openly for **learning and demonstration purposes only**, so that anyone — including junior developers — can easily run, test, and explore the system without additional setup complexity.
+> Exposing environment variable values directly in documentation is **not recommended for production systems**. However, in this project, the configuration values are provided openly for **learning and demonstration purposes only**, so that anyone — including junior developers — can easily run, test, and explore the system without additional setup complexity.
 
 ---
 
