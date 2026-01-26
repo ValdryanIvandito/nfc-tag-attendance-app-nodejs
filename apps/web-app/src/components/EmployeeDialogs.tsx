@@ -174,7 +174,7 @@ export const EmployeeDialogs: React.FC<Props> = ({
         </DialogContent>
       </Dialog>
 
-      {/* DELETE CONFIRM (AlertDialog) */}
+      {/* DELETE CONFIRM */}
       <AlertDialog
         open={!!deleteEmployeeId}
         onOpenChange={onCancelDelete as any}

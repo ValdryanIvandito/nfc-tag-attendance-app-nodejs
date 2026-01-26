@@ -29,7 +29,7 @@ export default function MainLayout({ titlePage, children }: Props) {
           onOpenMobile={() => setMobileOpen(true)}
         />
 
-        {/* Main content with proper padding and max-width for readability */}
+        {/* Main content */}
         <main className="flex-1 p-3 sm:p-4 overflow-auto">
           <div className="max-w-400 mx-auto w-full">{children}</div>
         </main>

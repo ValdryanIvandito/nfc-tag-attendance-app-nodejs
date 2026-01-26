@@ -28,7 +28,6 @@ export default function EmployeePage() {
     update,
   } = useEmployees({});
 
-  // local UI state for dialogs
   const [editEmployee, setEditEmployee] = useState<Employee | null>(null);
   const [newLeave, setNewLeave] = useState<string>("");
   const [detailEmployee, setDetailEmployee] = useState<Employee | null>(null);

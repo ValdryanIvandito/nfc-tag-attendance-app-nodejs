@@ -58,7 +58,6 @@ class AttendanceModel {
 
     const and: Prisma.AttendanceWhereInput[] = [];
 
-    // Search by employee name
     if (search) {
       and.push({
         Employee: {
@@ -70,7 +69,6 @@ class AttendanceModel {
       });
     }
 
-    // Filter by department (ENUM)
     if (department && department in Department) {
       and.push({
         Employee: {
@@ -79,7 +77,6 @@ class AttendanceModel {
       });
     }
 
-    // Filter by date range
     if (date) {
       const { start, end } = getDateRange(date, timezone);
 

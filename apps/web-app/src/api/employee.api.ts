@@ -28,7 +28,7 @@ export const employeeAPI = {
       limit: res.data.data.limit,
       total: res.data.data.total,
       totalPages: res.data.data.totalPages,
-      employees: res.data.data.data, // array employee
+      employees: res.data.data.data,
     };
   },
 

@@ -11,9 +11,7 @@ dotenv.config();
 
 const proxyRouter = express.Router();
 
-/**
- * Allowed Web Origins (Allowlist)
- */
+// Allowed Web Origins (Allowlist)
 const webOrigins: string[] = process.env.WEB_ORIGINS
   ? process.env.WEB_ORIGINS.split(",").map((o) => o.trim())
   : [];
@@ -46,9 +44,7 @@ proxyRouter.use((req: Request, res: Response, next: NextFunction) => {
     }
   }
 
-  /**
-   * BLOCK if origin is missing or not allowed
-   */
+  // BLOCK if origin is missing or not allowed
   if (!requestOrigin || !webOrigins.includes(requestOrigin)) {
     return res.status(403).json({
       status: 403,
@@ -56,9 +52,7 @@ proxyRouter.use((req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  /**
-   * CORS HEADERS
-   */
+  // CORS HEADERS
   res.setHeader("Access-Control-Allow-Origin", requestOrigin);
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -67,21 +61,13 @@ proxyRouter.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
-  /**
-   * Handle Preflight
-   */
+  // Handle Preflight
   if (req.method === "OPTIONS") {
     return res.sendStatus(204);
   }
 
   next();
 });
-
-/**
- * ==========================
- * API ROUTES
- * ==========================
- */
 
 // Attendance
 proxyRouter.get("/v1/attendance", AttendanceController.getAttendance);

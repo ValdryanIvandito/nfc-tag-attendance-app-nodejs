@@ -9,6 +9,7 @@ export const dashboardAPI = {
     const params = new URLSearchParams();
     const datetime = DateTime.local().toISO();
     const timezone = DateTime.local().zoneName;
+    
     params.append("datetime", String(datetime));
     params.append("timezone", String(timezone));
 

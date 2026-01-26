@@ -19,7 +19,6 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {/* ================= HEADCOUNT ================= */}
 
       <StatCard
         title="Active Employees"
@@ -28,8 +27,6 @@ export default function Home() {
         icon={<Users className="h-6 w-6 text-emerald-400" />}
       />
 
-      {/* ================= ATTENDANCE ================= */}
-
       <StatCard
         title="Present Today"
         value={Number(dashboardData?.presentToday ?? 0)}
@@ -37,16 +34,12 @@ export default function Home() {
         icon={<UserCheck className="h-6 w-6 text-sky-400" />}
       />
 
-      {/* ================= LEAVE SUMMARY ================= */}
-
       <StatCard
         title="Total Leave"
         value={Number(dashboardData?.totalLeave ?? 0)}
         accent="text-amber-400"
         icon={<Plane className="h-6 w-6 text-amber-400" />}
       />
-
-      {/* ================= LEAVE DETAILS ================= */}
 
       <StatCard
         title="Annual Leave"

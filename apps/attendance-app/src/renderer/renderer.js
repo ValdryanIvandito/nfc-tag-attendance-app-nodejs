@@ -23,15 +23,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function showMessage(text, type = "default") {
-    // Reset all color classes
     message.classList.remove("text-green-600", "text-blue-600", "text-red-600");
 
-    // Apply color based on type
     if (type === "success") message.classList.add("text-green-600");
     if (type === "checkout") message.classList.add("text-blue-600");
     if (type === "error") message.classList.add("text-red-600");
 
-    // Reset animation
     message.classList.remove("fade-enter-active");
     void message.offsetWidth;
     message.classList.add("fade-enter", "fade-enter-active");
@@ -39,14 +36,12 @@ window.addEventListener("DOMContentLoaded", () => {
     message.textContent = text;
   }
 
-  // Update date & time every second
   updateDateTime();
   setInterval(updateDateTime, 1000);
 
   window.nfcAPI.onCardDetected((msg) => {
     icon.classList.remove("pulse");
 
-    // Evaluate message category
     let type = "default";
     if (msg.includes("Welcome")) type = "success";
     if (msg.includes("See you")) type = "checkout";
@@ -59,7 +54,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     showMessage(msg, type);
 
-    // Reset after 2 seconds
     setTimeout(() => {
       showMessage("Tap your ID card to record your attendance.");
       icon.classList.add("pulse");

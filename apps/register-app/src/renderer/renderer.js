@@ -52,16 +52,13 @@ window.addEventListener("DOMContentLoaded", () => {
       ],
     };
 
-    // Listener untuk department
     departmentSelect.addEventListener("change", () => {
       const selectedDepartment = departmentSelect.value;
 
-      // Kosongkan position dropdown
       positionSelect.innerHTML = `<option value="">Select position</option>`;
 
       if (!selectedDepartment || !positionMap[selectedDepartment]) return;
 
-      // Tambahkan opsi position sesuai department
       positionMap[selectedDepartment].forEach((pos) => {
         const option = document.createElement("option");
         option.value = pos;

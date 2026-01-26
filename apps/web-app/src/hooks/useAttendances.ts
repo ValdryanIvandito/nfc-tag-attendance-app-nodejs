@@ -24,7 +24,6 @@ export function useAttendances() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
 
-  /* ================= FETCH ================= */
   const fetchAttendances = useCallback(async () => {
     try {
       setLoading(true);
@@ -48,7 +47,6 @@ export function useAttendances() {
     }
   }, [page, limit, search, department, date]);
 
-  /* ================= REALTIME ================= */
   const prependAttendance = useCallback(
     (attendance: Attendance) => {
       if (page !== 1) return;
