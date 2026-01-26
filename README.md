@@ -1,10 +1,9 @@
 # NFC Attendance System
 
-Traditional attendance systems often face operational challenges such as
-manual data entry errors, slow verification processes, and high
-operational costs. Many modern digital attendance solutions rely on
-biometric hardware, which typically requires significant upfront
-investment, specialized devices, and complex maintenance making them
+Many small companies and startups face challenges when implementing
+digital attendance systems because most available solutions rely on
+expensive biometric hardware such as fingerprint or iris scanners,
+which require high upfront costs and complex maintenance making them
 less accessible for small businesses and startups.
 
 The NFC Attendance System was designed as a **cost-effective and
@@ -99,8 +98,7 @@ In real-world scenarios, NFC-based attendance systems may be vulnerable
 to proxy attendance, where employees share cards with others.
 
 This issue is not addressed in the current implementation. Planned
-improvements include **face recognition verification** to strengthen
-identity validation during attendance operations.
+improvements include **simple software-based face verification** using standard camera devices to improve identity validation during attendance.
 
 ---
 
@@ -401,7 +399,7 @@ This project is licensed under the **Apache License 2.0**. See the [LICENSE](./L
 Potential future enhancements include:
 
 - User authentication and role management
-- Face recognition integration
+- Simple software-based face verification.
 - Multi-terminal device support
 - Offline-first attendance synchronization
 - Advanced analytics dashboard
